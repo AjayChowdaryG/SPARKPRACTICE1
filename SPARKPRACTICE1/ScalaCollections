@@ -1,0 +1,45 @@
+How to define arryas? 2 ways.
+
+1) specify no of elements first and assign values later
+var books:Array[String]=new Array[String](3)
+var books = new Array[String](3)
+
+2) specify values at once
+var books=Array("abc","def","ghi")
+Assign values : books(0)="xyz"
+--------------------------------
+
+Lists:: Same like arrays but elements cannot be changed by assignment.
+Lists with element type T is written as List(2).
+
+2 Ways of creation.
+1) like arrays  val emptyList: List[Nothing]=List()
+	 val l1:List[String] =List("a","b","c")
+	empty list is created by using Nil.
+	val empty = Nil
+2) Use :: operator
+val l2="abc"::("def"::("ghi"::Nil))
+returns l2: List[String] = List(abc, def, ghi)
+
+
+List operations: head, tail 
+
+---------------------------------------------------------------
+Ranges: 
+Range havve: Start,End and Stepping value
+
+> 1 to 5
+> 1 until 5
+> 1 to 20 by 4
+
+----------------------	
+
+Tuple : Ordered contaner of 2 or more values of same or different types.
+We cannot iterate through tuples. It can just holds one or more values.
+it is useful when you want to group elements.
+
+How to create tuples?
+val tuple=(1,true,"ABC")
+
+second way is using RELATIONAL OPERATOR (->)
+val tuple2= 1 -> true -> "ABC"

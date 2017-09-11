@@ -1,0 +1,54 @@
+Spark WordCount in Spark-shell::
+
+val textFile = sc.textFile("/home/osboxes/Inputs/Wiki.txt")
+val words = textFile.flatMap(line => line.split(" "))
+val pairWords= words.map(word=>(word,1))
+val counts = pairWords.reduceByKey{case(x,y) => x+y}
+counts.saveAsTextFile("Ajay_wc")
+
+--------------------------------------------------
+
+Sparl-SQL::::
+
+login to spark-sql shell
+
+val linesDF = sc.textFile("Ajay_wc").toDF("line")
+val wordsDF = linesDF.explode("line","word")((line: String) => line.split(" "))
+val wordCountDF = wordsDF.groupBy("word").count()
+wordCountDF.show()
+
+
+SPARK-SQL:::::
+
+wordCountDF.printSchema()
+
+wordCountDF.select("word").show()
+wordCountDF.select("count").show()
+wordCountDF.select($"word", $"count" + 1).show()
+
+wordCountDF.filter($"count" > 0).show()
+wordCountDF.filter($"word" like "Hi").show()
+
+wordCountDF.groupBy("word").count().show()
+
+-------------------------
+Running SQL Queries Programmatically
+
+// Register the DataFrame as a SQL temporary view
+wordCountDF.createOrReplaceTempView("words")
+val wordsDF = spark.sql("SELECT * FROM words")
+
+wordsDF.show()
+
+
+Saving the data::
+wordsDF.write.parquet("wc.parquet")
+wordsDF.write.text("wc.txt")
+
+val wordsDF1 = spark.read.parquet("/home/osboxes/wc.parquet")
+wordsDF1 is a DataFrame
+wordsDF1.show()
+ 
+
+-----------------------------------------------------
+
